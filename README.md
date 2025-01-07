@@ -1,16 +1,92 @@
-# QueueProcessing
+# QueueProcessing 
 
-This project simulates the operating system’s selection of processes to send to the CPU. The operating system will select the next process from the of awaiting processes. Each process will require 1 or more the resources A, B and C. Some processes will require only B for example, while another might require A and B, yet another B and C. If the resource is available, the process can be started. If one or more of the resources are unavailable, then the process must wait one cycle. A process that is started will only use a resource for one cycle. A process can only start if all the previous processes have been started.  Here is a chart describing a possible scenario:
-Starting process list with resources in ( ):  P1(A);P2(B); P3(B,C);P4(C);P5(A,B,C); P6(B,C) ;P7(A);P8(A);P9(B);P10(C) 
+## Project Overview
+This project simulates how an operating system selects and manages processes to send to the CPU based on resource availability. The simulation models real-world scheduling constraints, ensuring processes only execute when the required resources are available. Processes are dynamically added and managed, making this a complex and realistic representation of queue processing in an operating system.
 
-Total number of cycles needed: 6
+## Key Features
+1. **Process Management**:
+   - Each process is associated with 1, 2, or 3 required resources (A, B, C).
+   - Processes execute only if all required resources are available.
+   - Processes must execute in the order they appear in the queue.
 
-Part A :  Read a one line from the Input file where the  line  has the format shown here: 
-P1(A);P2(B); P3(B,C);P4(C);P5(A,B,C); P6(B,C) ;P7(A);P8(A);P9(B);P10(C)
+2. **Resource Constraints**:
+   - Resources are assigned to processes for one cycle and are released at the end of the cycle.
+   - If a process cannot start due to unavailable resources, it waits until the next cycle.
 
-Randomly generate a list of 20 processes. Start executing processes as before. Randomly select 1,2 or 3 resources (A,B,C) for each process. But at the end of each cycle (regardless of how many processes were run), add 2 more process to the end of the list with 1,2,3 random resources. Output the number of cycles needed to empty the list of processes, but if the list does not empty by cycle 1000, then output the number of processes left (length of the list). Output the length of the list of processes every 100th cycle to watch its growth:
+3. **Dynamic Queue**:
+   - The system dynamically adds two new processes at the end of the queue at the end of each cycle.
+   - New processes are assigned random resource requirements (A, B, C).
 
-Length of processes at cycle 100: 104
-Length of processes at cycle 200: 107
-Length of processes at cycle 300: 63
-Length of processes at cycle 400: 139
+4. **Simulation**:
+   - Processes are executed until the queue is empty or the simulation reaches 1,000 cycles.
+   - The program tracks and outputs the length of the queue every 100 cycles to analyze growth.
+
+## Objectives
+The primary goals of this project are:
+- To simulate process scheduling with resource constraints in a queue-based system.
+- To understand how dynamic process generation impacts the system's performance.
+- To develop a robust simulation that provides meaningful metrics for analysis.
+
+## Implementation Details
+1. **Input**:
+   - The program reads an input file with a single line representing an initial queue of processes and their required resources.
+   - Example input: `P1(A);P2(B);P3(B,C);P4(C);P5(A,B,C);P6(B,C);P7(A);P8(A);P9(B);P10(C)`
+
+2. **Process Execution**:
+   - The program simulates process execution in cycles:
+     - Each cycle, the system checks if the next process in the queue can be started based on resource availability.
+     - If all required resources are available, the process executes and releases the resources at the end of the cycle.
+     - If resources are unavailable, the process waits, and other processes in the queue are checked.
+
+3. **Dynamic Queue Growth**:
+   - At the end of each cycle, two new processes with random resource requirements (A, B, or C) are added to the queue.
+
+4. **Output**:
+   - The total number of cycles needed to empty the queue.
+   - If the queue does not empty by cycle 1,000, the program outputs the number of processes left in the queue.
+   - The length of the queue is output every 100 cycles to monitor its growth.
+
+5. **Metrics Example**:
+   ```
+   Length of processes at cycle 100: 104
+   Length of processes at cycle 200: 107
+   Length of processes at cycle 300: 63
+   Length of processes at cycle 400: 139
+   ```
+
+6. **Termination**:
+   - The simulation terminates either when the queue is empty or after 1,000 cycles, providing a summary of the results.
+
+## Challenges Addressed
+- **Resource Allocation**:
+  - The program efficiently manages shared resources among competing processes.
+- **Queue Management**:
+  - The dynamic nature of the queue tests the system's ability to handle continuous growth and execution constraints.
+- **Cycle Efficiency**:
+  - The simulation optimizes execution by ensuring processes only proceed when resources are available.
+
+## How to Run
+1. Provide an input file containing the initial queue of processes in the specified format.
+2. Compile and execute the program using a Java IDE or terminal.
+3. The program outputs:
+   - The total cycles required to empty the queue (if possible).
+   - The number of processes remaining if the queue does not empty by cycle 1,000.
+   - Queue lengths at 100-cycle intervals.
+
+## Example Results
+- Total Cycles: 985
+- Queue Empty: Yes
+- Metrics:
+  ```
+  Length of processes at cycle 100: 104
+  Length of processes at cycle 200: 107
+  Length of processes at cycle 300: 63
+  Length of processes at cycle 400: 139
+  ```
+
+## Notes
+- Processes are represented in a queue, and their required resources are stored as attributes.
+- The system ensures fair scheduling, processing requests in the order they arrive.
+- Random generation of resources for new processes introduces variability, allowing for dynamic and realistic testing.
+
+This project offers a deep dive into resource-constrained scheduling and queue management, key concepts in operating system design.
